@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leela porfa</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Georgia', serif;
+}
+
+   body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    overflow-x:hidden;
+    overflow-y:auto;
+    color:#fff;
+    padding:40px 20px;
+}
+
+.pantalla{
+    text-align:center;
+    padding:20px;
+}
+
+.oculto{
+    display:none;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+button{
+    background:#fff;
+    color:#e91e63;
+    border:none;
+    padding:15px 30px;
+    border-radius:30px;
+    font-size:18px;
+    cursor:pointer;
+    margin-top:20px;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.08);
+}
+
+.sobre{
+    font-size:120px;
+    cursor:pointer;
+    transition:0.5s;
+}
+
+.sobre:hover{
+    transform:scale(1.1);
+}
+
+.carta{
+    background:rgba(255,255,255,0.95);
+    color:#444;
+    width:90%;
+    max-width:700px;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    margin-bottom:40px;
+}
+
+}
+
+#textoCarta{
+    font-size:20px;
+    line-height:1.8;
+    white-space:pre-line;
+}
+
+.galeria{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-top:25px;
+}
+
+.galeria img{
+    width:200px;
+    max-width:100%;
+    height:auto;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    transition:0.4s;
+}
+
+.galeria img:hover{
+    transform:scale(1.08);
+}
+
+#razon{
+    margin-top:25px;
+    font-size:22px;
+}
+
+.final{
+    font-size:70px;
+    animation:latido 1s infinite;
+}
+
+@keyframes latido{
+    50%{
+        transform:scale(1.1);
+    }
+}
+
+.corazon{
+    position:absolute;
+    font-size:25px;
+    animation:subir linear infinite;
+}
+
+@keyframes subir{
+    from{
+        transform:translateY(100vh);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-100px);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Pantalla 1 -->
+<div class="pantalla" id="inicio">
+    <h1>De:Jazmincita21</h1>
+    <button onclick="mostrarSobre()">💌 Abrir</button>
+</div>
+
+<!-- Pantalla 2 -->
+<div class="pantalla oculto" id="sobrePantalla">
+    <div class="sobre" onclick="abrirCarta()">💌</div>
+    <h2>Haz clic en el sobre</h2>
+</div>
+
+<!-- Pantalla 3 -->
+<div class="pantalla oculto" id="cartaPantalla">
+    <div class="carta">
+        <h1>Para Jorgito❤️</h1>
+        <p id="textoCarta"></p>
+
+        <div class="galeria">
+            <img src="foto1.jpeg">
+            <img src="foto2.jpeg">
+            <img src="foto3.jpeg">
+        </div>
+
+        <button onclick="mostrarRazones()">
+    Descúbrelas
+</button>
+
+        <div id="razon"></div>
+
+        <button id="botonFinal" class="oculto" onclick="final()">
+            ✨ Tengo una última cosa que decirte ✨
+        </button>
+    </div>
+</div>
+
+<!-- Pantalla final -->
+<div class="pantalla oculto" id="pantallaFinal">
+    <div class="final">
+        Si quieres romperme de nuevo, pero vuelve un rato más 
+    </div>
+    <h2>¿Vemos el partido juntos?</h2>
+</div>
+
+<audio id="musica"></audio>
+<script>
+const canciones = [
+    "cancion1.mp3",
+    "cancion2.mp3",
+    "cancion3.mp3"
+];
+
+let indice = 0;
+const audio = document.getElementById("musica");
+
+audio.src = canciones[indice];
+
+audio.addEventListener("ended", () => {
+    indice = (indice + 1) % canciones.length;
+    audio.src = canciones[indice];
+    audio.play();
+});
+
+function mostrarSobre() {
+    document.getElementById("inicio").classList.add("oculto");
+    document.getElementById("sobrePantalla").classList.remove("oculto");
+}
+
+function abrirCarta() {
+    document.getElementById("sobrePantalla").classList.add("oculto");
+    document.getElementById("cartaPantalla").classList.remove("oculto");
+
+    audio.play();
+
+    escribirCarta();
+    crearCorazones();
+}
+
+const carta = `Hola Jorgito...
+
+Si no te he escrito cartas es porque no he encontrado las palabras correctas para decirte lo que siento y más que eso es miedo, tengo miedo de que nada valga la pena, de que te diga todo y te vuelvas a ir, de lo que pueda pasar en un futuro, ojalá pudieras ver las veces que he intentado hacerlo pero siempre hay algo que me detiene y yo sé que dirás que solo porque me has estado ignorado o alejando según tú nada más te escribo la carta y sí, la verdad sí porque no quiero que te vayas de nuevo, pero si te vas no quiero que te vayas sin saber lo mucho que te amo.
+Bueno ya lo sabes, me cuesta expresarme, pero tampoco quiero justificarme o victimizarme si quiero decirlo y perdón si casi no lo digo, pero de verdad te amo.
+Qué más da si resultamos heridos, hay que hacer las cosas con miedo, yo haré todo para que te quedes y confíes en mí y yo confiaré en ti.
+Te quiero demasiado y no quiero perderte por todo lo que tenemos juntos, siempre pienso en ti y aunque llevo más tiempo sin ti en el cine, dejaste una huella en mi que cualquier cosa me hace pensar en cuando trabajabas ahí, extraño mucho compartir turno juntos y daría todo por verte con tu uniforme otra vez.
+No quiero enamorarme de alguien más, no quiero una novedad ni un pasado, yo te quiero a ti y ya, por eso quiero que nos quedemos juntos, que terminemos los planes que tenemos y hacer unos nuevos, quedarnos hasta la 1 de la mañana en el parque hablando de guitarras y así, desvelarnos hablando de coca y Pepsi, que me cantes la de los Guayabers, ir al gym juntos aunque termine llorando mientras hago un ejercicio, que me lleves flores cada fin de semana, entiendo que no siempre podrás hacerlo pero te quiero agradecer por tomarte el tiempo de ir a dejarlas, lo aprecio bastante. Te amo y amo todo lo que haces y todo lo que tenemos, si quiero que te quedes y haría lo que fuera porque te quedaras, quiero que me dejes intentar, pero si no puedo hacer que cambies de opinión, al menos quiero verte una última vez, prometo que respetaré tu decisión, no te pediré explicaciones ni nada, solo quiero disfrutar un último momento contigo, así como tú tienes miedo de las últimas veces porque no sabes cuando será la última vez que pasará algo, yo también tengo miedo de eso, yo no supe que te vería por última vez el 25 de Diciembre pero tú si lo sabías, al menos déjame saber esta vez, por favor.
+
+
+ATT,
+Taquillere`;
+
+let i = 0;
+
+function escribirCarta() {
+    let texto = document.getElementById("textoCarta");
+
+    let intervalo = setInterval(() => {
+        texto.innerHTML += carta.charAt(i);
+        i++;
+
+        if (i >= carta.length) {
+            clearInterval(intervalo);
+        }
+    }, 45);
+}
+
+const razones = [
+    "Porque tenemos una conexión",
+    "Porque contigo he vivido nuevas experiencias",
+    "Porque disfruto estar contigo",
+    "Porque no quiero a nadie más",
+    "Porque las cosas fáciles no valen la pena"
+];
+
+let contador = 0;
+
+function mostrarRazones() {
+    if (contador < razones.length) {
+        document.getElementById("razon").innerHTML =
+            razones[contador];
+        contador++;
+    }
+
+    if (contador === razones.length) {
+        document.getElementById("botonFinal")
+            .classList.remove("oculto");
+    }
+}
+
+function final() {
+    document.getElementById("cartaPantalla")
+        .classList.add("oculto");
+
+    document.getElementById("pantallaFinal")
+        .classList.remove("oculto");
+}
+
+function crearCorazones() {
+    setInterval(() => {
+        let corazon = document.createElement("div");
+        corazon.classList.add("corazon");
+        corazon.innerHTML = "❤️";
+        corazon.style.left =
+            Math.random() * 100 + "vw";
+
+        corazon.style.animationDuration =
+            (Math.random() * 4 + 4) + "s";
+
+        document.body.appendChild(corazon);
+
+        setTimeout(() => {
+            corazon.remove();
+        }, 8000);
+
+    }, 300);
+}
+</script>
